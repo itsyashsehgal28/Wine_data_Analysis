@@ -1,3 +1,38 @@
+return Object.entries(dataByClass).reduce((acc, [className, classData]) => {
+    acc[className] = callback(classData);
+    return acc;
+}, {});
+Object.entries(dataByClass): This method converts the dataByClass object into an array of [key, value] pairs, where each pair represents an entry in the object. For example, if dataByClass looks like 
+
+
+
+{1: [2.5, 3.0], 2: [1.5, 2.0]},
+
+
+
+
+ Object.entries(dataByClass) would return 
+ 
+ 
+ 
+ [[1, [2.5, 3.0]], [2, [1.5, 2.0]]].
+
+
+
+ 
+reduce((acc, [className, classData]) => { ... }, {}): This method applies a function to each element of the array (in this case, the array of [key, value] pairs), resulting in a single output value. The function takes two parameters:
+acc: The accumulator. It accumulates the results of the callback function on each element of the array.
+[className, classData]: Destructured parameters representing each element of the array. className is the key (in our case, the alcohol class), and classData is the value (an array of flavanoids values for that class).
+acc[className] = callback(classData): Inside the function passed to reduce, this line assigns the result of calling the callback function with classData as the argument to the acc object. This effectively calculates the desired statistical measure (mean or median) for the current alcohol class (className) and stores it in the acc object with the class name as the key.
+return acc;: This line returns the updated accumulator (acc) after each iteration. This updated accumulator is passed as the first argument to the next iteration of reduce.
+Let's say callback is a function that calculates the mean or median of the flavanoids values for a given alcohol class. For example, if callback is the function that calculates the mean, callback(classData) would return the mean flavanoids value for the class represented by classData.
+
+The entire reduce operation builds a new object (acc) where each key is an alcohol class, and each value is the result of applying the callback function to the flavanoids values of that class. Finally, this object is returned as the result of the reduce operation.
+
+
+
+
+
 
 
 
