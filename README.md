@@ -1,57 +1,50 @@
-return Object.entries(dataByClass).reduce((acc, [className, classData]) => {
-    acc[className] = callback(classData);
-    return acc;
-}, {});
-Object.entries(dataByClass): This method converts the dataByClass object into an array of [key, value] pairs, where each pair represents an entry in the object. For example, if dataByClass looks like 
+# Project Workflow
 
+This README file outlines the workflow of the project from `index.js` to `app.js` and how the data flows through various components.
 
+## 1. index.js
 
-{1: [2.5, 3.0], 2: [1.5, 2.0]},
+`index.js` serves as the entry point of the React application.
 
+### Responsibilities:
+- Initializes the React application
+- Renders the `App` component
 
+## 2. App.js
 
+`App.js` is the main component of the application.
 
- Object.entries(dataByClass) would return 
- 
- 
- 
- [[1, [2.5, 3.0]], [2, [1.5, 2.0]]].
+### Responsibilities:
+- Sets up routing for different pages
+- Renders different pages based on the URL route
 
+#### Routing:
+- **Route 1:** "/" - Renders the `HomePage` component
 
+## 3. HomePage.jsx
 
- 
-reduce((acc, [className, classData]) => { ... }, {}): This method applies a function to each element of the array (in this case, the array of [key, value] pairs), resulting in a single output value. The function takes two parameters:
-acc: The accumulator. It accumulates the results of the callback function on each element of the array.
-[className, classData]: Destructured parameters representing each element of the array. className is the key (in our case, the alcohol class), and classData is the value (an array of flavanoids values for that class).
-acc[className] = callback(classData): Inside the function passed to reduce, this line assigns the result of calling the callback function with classData as the argument to the acc object. This effectively calculates the desired statistical measure (mean or median) for the current alcohol class (className) and stores it in the acc object with the class name as the key.
-return acc;: This line returns the updated accumulator (acc) after each iteration. This updated accumulator is passed as the first argument to the next iteration of reduce.
-Let's say callback is a function that calculates the mean or median of the flavanoids values for a given alcohol class. For example, if callback is the function that calculates the mean, callback(classData) would return the mean flavanoids value for the class represented by classData.
+`HomePage.jsx` represents the main landing page of our application.
 
-The entire reduce operation builds a new object (acc) where each key is an alcohol class, and each value is the result of applying the callback function to the flavanoids values of that class. Finally, this object is returned as the result of the reduce operation.
+### Responsibilities:
+- Displays statistical measures of Flavonoids and Gamma for different alcohol classes
+- Calls functions from `functionalities.jsx` to calculate mean, median, and mode
 
+## 4. functionalities.jsx
 
+`functionalities.jsx` contains utility functions for data analysis.
 
+### Responsibilities:
+- Contains functions to calculate mean, median, and mode by alcohol class
+- Utilizes the `sortDataByClass` function to organize data by alcohol class
 
+## 5. sortDataByClass.jsx
 
+`sortDataByClass.jsx` is a Higher-Order Component (HOC) that sorts data by alcohol class.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### Responsibilities:
+- Accepts a dataset and a callback function
+- Sorts the data into classes based on the alcohol property
+- Passes sorted data to the callback function for further processing
 
 
 

@@ -1,41 +1,33 @@
 import React from "react";
+import { sortDataByClass } from "../HOC/SortData";
 
-const sortDataByClass = (dataset, property, callback) => {
-  const dataByClass = {};
-  dataset.forEach((entry) => {
-    const { Alcohol, Flavanoids, Ash, Magnesium, Hue } = entry;
-    let value;
+/** 
+ * Calculates the mean value for each alcohol class in the dataset.
+ * 
+ * @param {Array} dataset - wineData
+ * @param {string} property - Flavanoids or Gamma
+ * @returns {Object} - An object containing the mean value for each alcohol class.
 
-    if (property === "Flavanoids") {
-      value = parseFloat(Flavanoids);
-    } 
-    else if (property === "Gamma") {
-      value = (parseFloat(Ash) * parseFloat(Hue)) / parseFloat(Magnesium);
-    }
-
-    if (!isNaN(value)) {
-      if (!dataByClass[Alcohol]) {
-        dataByClass[Alcohol] = [];
-      }
-
-      dataByClass[Alcohol].push(value);
-    }
-  });
-  return Object.entries(dataByClass).reduce((acc, [className, classData]) => {
-    acc[className] = callback(classData);
-    return acc;
-  }, {});
-};
-
+*/
 export const MeanByClass = (dataset , property) => {
   const classMeans = sortDataByClass(dataset, property , (data) => {
     const sum = data.reduce((acc, value) => acc + value, 0);
     return sum / data.length;
+
+    
   });
 
   return classMeans;
 };
 
+/**
+ * Calculates the median value for each alcohol class in the dataset.
+ * 
+ * @param {Array} dataset - The dataset to calculate the median for.
+ * @param {string} property - Flavanoids or Gamma
+
+ * @returns {Object} - An object containing the median value for each alcohol class.
+ */
 export const MedianByClass = (dataset , property ) => {
   const classMedians = sortDataByClass(dataset, property , (data) => {
     const sortedData = data.sort((a, b) => a - b);
@@ -56,6 +48,13 @@ export const MedianByClass = (dataset , property ) => {
   return classMedians;
 };
 
+/**
+ * Calculates the mode value for each alcohol class in the dataset.
+ * 
+ * @param {Array} dataset - The dataset to calculate the mode for.
+ * @param {string} property - Flavanoids or Gamma
+ * @returns {Object} - An object containing the mode value for each alcohol class.
+ */
 export const ModeByClass = (dataset , property) => {
   const classMode = sortDataByClass(dataset, property , (data) => {
     const countMap = {};
@@ -79,27 +78,3 @@ export const ModeByClass = (dataset , property) => {
   return classMode;
 };
 
-// dataset.forEach((entry) => {
-//     const { Alcohol, Flavanoids } = entry; ;
-//     const FlavanoidsNumber = parseFloat(Flavanoids);
-
-//     if(!isNaN(FlavanoidsNumber)){
-//         if(!dataByClass[Alcohol])
-//     {
-//         dataByClass[Alcohol]=[];
-//     }
-//     };
-
-//     dataByClass[Alcohol].push(FlavanoidsNumber);
-// });
-// // console.log(dataByClass);
-// const classMeans = {};
-// for (const className in dataByClass){
-//     const data = dataByClass[className];
-//     const sum = data.reduce((acc , value) => acc + value , 0);
-//     classMeans[className] = sum / data.length;
-//     // console.log(data);
-//     // console.log(sum);
-// };
-// console.log(classMeans);
-// return classMeans;

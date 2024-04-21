@@ -1,18 +1,20 @@
 import React from "react";
 import wineData from "../Data/Wine-Data.json";
+// dataset
+
 import { MeanByClass, MedianByClass , ModeByClass } from "../Components/functionalities";
+// functions for statistical calculation
 
 const HomePage = () => {
-  const classFlavanoidsMeans = MeanByClass(wineData, "Flavanoids"); 
-  // console.log("mean" , classMeans);
-  const classFlavanoidsMedians = MedianByClass(wineData, "Flavanoids"); 
-  // console.log("median " , classMedians);
+  const classFlavanoidsMeans = MeanByClass(wineData, "Flavanoids");
+  const classFlavanoidsMedians = MedianByClass(wineData, "Flavanoids");
   const classFlavanoidsMode = ModeByClass(wineData, "Flavanoids");
+  // function calling for Flavanoids data for mean , median and mode
 
   const classGammaMeans = MeanByClass(wineData, "Gamma");
   const classGammaMedians = MedianByClass(wineData, "Gamma");
   const classGammaMode = ModeByClass(wineData, "Gamma");
-
+  // function calling for Gamma data for mean , median and mode
 
   return (
     <div>
@@ -48,6 +50,7 @@ const HomePage = () => {
         </tbody>
       </table>
 
+      <h1>Statistical Measures of Gamma for Different Alcohol Classes</h1>
       <table>
         <thead>
           <tr>
@@ -59,19 +62,19 @@ const HomePage = () => {
         </thead>
         <tbody>
           <tr>
-            <th>Flavonoids Mean</th>
+            <th>Gamma Mean</th>
             {Object.values(classGammaMeans).map((mean, index) => (
               <td key={index}>{mean.toFixed(3)}</td>
             ))}
           </tr>
           <tr>
-            <th>Flavonoids Median</th>
+            <th>Gamma Median</th>
             {Object.values(classGammaMedians).map((median, index) => (
               <td key={index}>{median.toFixed(3)}</td>
             ))}
           </tr>
           <tr>
-            <th>Flavonoids Mode</th>
+            <th>Gamma Mode</th>
             {Object.values(classGammaMode).map((mode, index) => (
               <td key={index}>{mode.toFixed(3)}</td>
             ))}
