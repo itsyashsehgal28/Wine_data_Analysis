@@ -70,7 +70,6 @@ export const ModeByClass = (dataset , property) => {
       if (countMap[value] > maxCount) {
         maxCount = countMap[value];
         mode = value;
-        console.log(countMap);
       }
     }
     return parseFloat(mode);

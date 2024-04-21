@@ -1,4 +1,10 @@
-# Project Workflow
+# How To Run The Project
+- clone the github repository : 
+- cd to your project directory 
+- yarn install 
+- yarn start
+
+## Project Workflow
 
 This README file outlines the workflow of the project from `index.js` to `app.js` and how the data flows through various components.
 
@@ -46,6 +52,17 @@ This README file outlines the workflow of the project from `index.js` to `app.js
 - Sorts the data into classes based on the alcohol property
 - Passes sorted data to the callback function for further processing
 
+## 6. StatisticalTable.jsx
+
+`This component is responsible for displaying statistical tables for different measures.
+
+### Responsibilities
+
+- Renders a table with statistical measures for a given title and data.
+- Formats the data to display mean, median, and mode for each class.
+- Adds bold formatting to the first column of each row.
+- Centers the text in each cell.
+- Adds borders to separate rows and columns.
 
 
 
