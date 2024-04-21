@@ -1,29 +1,34 @@
 import React from "react";
 
-const sortDataByClass = (dataset, callback) => {
+const sortDataByClass = (dataset, property, callback) => {
   const dataByClass = {};
-
   dataset.forEach((entry) => {
-    const { Alcohol, Flavanoids } = entry;
-    const FlavanoidsNumber = parseFloat(Flavanoids);
+    const { Alcohol, Flavanoids, Ash, Magnesium, Hue } = entry;
+    let value;
 
-    if (!isNaN(FlavanoidsNumber)) {
+    if (property === "Flavanoids") {
+      value = parseFloat(Flavanoids);
+    } 
+    else if (property === "Gamma") {
+      value = (parseFloat(Ash) * parseFloat(Hue)) / parseFloat(Magnesium);
+    }
+
+    if (!isNaN(value)) {
       if (!dataByClass[Alcohol]) {
         dataByClass[Alcohol] = [];
       }
+
+      dataByClass[Alcohol].push(value);
     }
-
-    dataByClass[Alcohol].push(FlavanoidsNumber);
   });
-
   return Object.entries(dataByClass).reduce((acc, [className, classData]) => {
     acc[className] = callback(classData);
     return acc;
   }, {});
 };
 
-export const MeanByClass = (dataset) => {
-  const classMeans = sortDataByClass(dataset, (data) => {
+export const MeanByClass = (dataset , property) => {
+  const classMeans = sortDataByClass(dataset, property , (data) => {
     const sum = data.reduce((acc, value) => acc + value, 0);
     return sum / data.length;
   });
@@ -31,12 +36,11 @@ export const MeanByClass = (dataset) => {
   return classMeans;
 };
 
-export const MedianByClass = (dataset) => {
-  const classMedians = sortDataByClass(dataset, (data) => {
+export const MedianByClass = (dataset , property ) => {
+  const classMedians = sortDataByClass(dataset, property , (data) => {
     const sortedData = data.sort((a, b) => a - b);
-    console.log("sort" , sortedData);
     const len = sortedData.length;
-    console.log(len);
+
     if (len % 2 === 0) {
       // If even number of observations
       const midIndex1 = len / 2 - 1;
@@ -52,10 +56,28 @@ export const MedianByClass = (dataset) => {
   return classMedians;
 };
 
+export const ModeByClass = (dataset , property) => {
+  const classMode = sortDataByClass(dataset, property , (data) => {
+    const countMap = {};
+    data.forEach((value) => {
+      countMap[value] = (countMap[value] || 0) + 1;
+      // checking if the key is present or not , if not then creating a key with value 0 and incrementing by 1
+      // if present then just incrementing by 1
+    });
 
-
-
-// const dataByClass = {};
+    let maxCount = 0;
+    let mode; // mode will be undefined for now
+    for (const value in countMap) {
+      if (countMap[value] > maxCount) {
+        maxCount = countMap[value];
+        mode = value;
+        console.log(countMap);
+      }
+    }
+    return parseFloat(mode);
+  });
+  return classMode;
+};
 
 // dataset.forEach((entry) => {
 //     const { Alcohol, Flavanoids } = entry; ;
