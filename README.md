@@ -1,5 +1,5 @@
 # How To Run The Project
-- clone the github repository : 
+- clone the github repository : "https://github.com/itsyashsehgal28/Wine_data_Analysis"
 - cd to your project directory 
 - yarn install 
 - yarn start
